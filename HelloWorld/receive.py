@@ -1,9 +1,6 @@
 import pika
 import os
 
-#host = 'small-hazel-56.bigwig.lshift.net'
-#port = 10573
-#credentials = pika.PlainCredentials('S9RHkr0N', 'ZT3iqNVuGTMTHgM9mCrxvaTiQDU23aoj')
 host = os.environ.get('RABBITMQ_HOST')
 port = int(os.environ.get('RABBITMQ_CONSUMERS_PORT'))
 credentials = pika.PlainCredentials(os.environ.get('RABBITMQ_USER'), os.environ.get('RABBITMQ_PASSWORD'))
