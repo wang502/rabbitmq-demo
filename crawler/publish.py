@@ -2,6 +2,7 @@ import pika
 import os
 import sys
 
+
 host = os.environ.get('RABBITMQ_HOST')
 port = int(os.environ.get('RABBITMQ_PRODUCERS_PORT'))
 credentials = pika.PlainCredentials(os.environ.get('RABBITMQ_USER'), os.environ.get('RABBITMQ_PASSWORD'))

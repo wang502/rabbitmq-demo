@@ -1,22 +1,20 @@
 import pika
 import os
+from amqp import *
+import json
 
-host = os.environ.get('RABBITMQ_HOST')
-port = int(os.environ.get('RABBITMQ_CONSUMERS_PORT'))
-credentials = pika.PlainCredentials(os.environ.get('RABBITMQ_USER'), os.environ.get('RABBITMQ_PASSWORD'))
-virtual_host = os.environ.get('RABBITMQ_VIRTUAL_HOST')
-
-connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port,virtual_host=virtual_host, credentials=credentials))
-channel = connection.channel()
-
-channel.queue_declare(queue='hello')
+conn = ConnectionManager("CONSUMER", 'hello')
+conn.get_connection()
+conn.init_queue()
+chan = conn.get_channel()
 
 def callback(ch, method, properties, body):
-    print(" [X] Received %r" % body)
+    d = json.loads(body)
+    print(" [X] Received %r" %(d.get("word")))
 
-channel.basic_consume(callback,
-                      queue='hello',
-                      no_ack=True)
+chan.basic_consume(callback,
+                   queue='hello',
+                  )
 
 print(" [*] Waiting for messages. To exit press CTRL+C")
-channel.start_consuming()
+chan.start_consuming()

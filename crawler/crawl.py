@@ -32,7 +32,8 @@ def crawl(ch, method, properties, body):
     print(" [*] result: " + str(c) + "\n")
 
 channel.basic_consume(crawl,
-                      queue='crawler',
-                      no_ack=True)
+                   queue='crawler',
+                   no_ack=True)
+
 print(" [*] Waiting for URL to crawl. To exit press CTRL+C")
 channel.start_consuming()
