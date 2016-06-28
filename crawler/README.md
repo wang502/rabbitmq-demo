@@ -11,3 +11,18 @@ The publisher reads in an array of names and publish to RabbitMQ. Then the subsc
 - Firstly, type ```python publish.py```. This will publish an array of urls to the job queue.
 - Then do ```python crawl.py``` to consume all urls and crawl the web pages. You will see the content being printed.
 - To add more workers, open a new terminal and do ```python crawl.py```. You will see each worker do their jobs individually.
+
+#### Difference between with ```no_ack=True``` and without
+```python
+chan.basic_consume(crawl,
+                   queue='crawler'
+                   )
+```
+Enables acknowledgement, so when the worker fails, the data in the queue is not lost. Since the data will be deleted only when it receives acknowledgement back from the worker, which tells the queue that the job has been done
+
+```python
+chan.basic_consume(crawl,
+                   queue='crawler'
+                   no_ack=True)
+```
+Disables acknowledgement, so when the worker fails on the first data, the data will be lost.

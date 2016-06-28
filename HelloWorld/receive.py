@@ -13,7 +13,8 @@ def callback(ch, method, properties, body):
     print(" [X] Received %r" %(d.get("word")))
 
 chan.basic_consume(callback,
-                   queue='hello',
+                   queue=conn.queue,
+                   no_ack=True
                   )
 
 print(" [*] Waiting for messages. To exit press CTRL+C")
