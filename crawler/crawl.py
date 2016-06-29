@@ -1,9 +1,17 @@
+# author: Seth Wang
+# email: sethwang199418@gmail.com
+# Part of RabbitMQ-Demo project
+# crawl.py
+# Consume all url messages in message broker, and parse the corresponding web page
+##################################################################################
+
 import pika
 from bs4 import BeautifulSoup
 import httplib2
 import os
 from amqp.amqp import *
 
+# set up connection and channel to RabbitMQ server
 conn = ConnectionManager('CONSUMER', 'crawler')
 conn.get_connection()
 conn.init_queue()

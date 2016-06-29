@@ -1,8 +1,16 @@
+# author: Seth Wang
+# email: sethwang199418@gmail.com
+# Part of RabbitMQ-Demo project
+# /crawler/publish.py
+# Publish list of urls to message broker
+################################################
+
 import pika
 import os
 import sys
 from amqp.amqp import *
 
+# set up connection and channel to RabbitMQ server
 conn = ConnectionManager('PRODUCER', 'crawler')
 conn.get_connection()
 conn.init_queue()
